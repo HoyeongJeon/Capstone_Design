@@ -15,12 +15,12 @@ export class SignUpDto extends PickType(UserModel, [
   @IsNotEmpty({
     message: '비밀번호 확인을 입력해주세요.',
   })
-  @IsStrongPassword(
-    { minLength: 6 },
-    {
-      message:
-        '비밀번호는 최소 6자리에 숫자, 영문 대문자, 영문 소문자, 특수문자가 포함되어야 합니다.',
-    },
-  )
+  // @IsStrongPassword(
+  //   { minLength: 6 },
+  //   {
+  //     message:
+  //       '비밀번호는 최소 6자리에 숫자, 영문 대문자, 영문 소문자, 특수문자가 포함되어야 합니다.',
+  //   },
+  // )
   passwordConfirm: string;
 }

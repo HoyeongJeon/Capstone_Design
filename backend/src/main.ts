@@ -7,6 +7,16 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  const corsOptions = {
+    origin: ['http://localhost:5173'],
+    //origin: `${process.env.FRONT_HOST}:${process.env.FRONT_PORT || 3001}`,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    allowedHeaders: 'Origin,X-Requested-With,Content-Type,Accept,Authorization',
+  };
+
+  app.enableCors(corsOptions);
+
   const configService = app.get(ConfigService);
   const SERVER_PORT = configService.get<number>('SERVER_PORT');
 
