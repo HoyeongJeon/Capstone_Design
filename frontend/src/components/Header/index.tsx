@@ -10,11 +10,70 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import axios from "axios";
+import { useState } from "react";
 
 export default function Header() {
-  const handleLogin = async () => {
-    const res = await axios.post();
+  const [signUpName, setSignUpName] = useState("");
+  const [signUpEmail, setSignUpEmail] = useState("");
+  const [signUpPassword, setSignUpPassword] = useState("");
+  const [signUpPasswordConfirm, setSignUpPasswordConfirm] = useState("");
+  const [loginEmail, setLoginEmail] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
+
+  const handleSignUpNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSignUpName(e.target.value);
   };
+
+  const handleSignUpEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSignUpEmail(e.target.value);
+  };
+
+  const handleSignUpPasswordChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setSignUpPassword(e.target.value);
+  };
+
+  const handleSignUpPasswordConfirmChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setSignUpPasswordConfirm(e.target.value);
+  };
+
+  const handleLoginEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLoginEmail(e.target.value);
+  };
+
+  const handleLoginPasswordChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setLoginPassword(e.target.value);
+  };
+
+  const handleSignUp = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/auth/signup",
+        {
+          name: signUpName,
+          email: signUpEmail,
+          password: signUpPassword,
+          passwordConfirm: signUpPasswordConfirm,
+        },
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <header className="bg-white rounded-lg m-4 dark:bg-gray-800">
       <ul className="flex justify-between">
@@ -51,6 +110,8 @@ export default function Header() {
                     type="email"
                     placeholder="이메일을 입력해주세요."
                     className="col-span-3"
+                    value={loginEmail}
+                    onChange={handleLoginEmailChange}
                   />
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
@@ -62,6 +123,8 @@ export default function Header() {
                     placeholder="비밀번호를 입력해주세요"
                     type="password"
                     className="col-span-3"
+                    value={loginPassword}
+                    onChange={handleLoginPasswordChange}
                   />
                 </div>
               </div>
@@ -89,6 +152,19 @@ export default function Header() {
               <div className="grid gap-4 py-4">
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="name" className="text-right">
+                    이름
+                  </Label>
+                  <Input
+                    id="name"
+                    type="text"
+                    placeholder="이름을 입력해주세요."
+                    className="col-span-3"
+                    value={signUpName}
+                    onChange={handleSignUpNameChange}
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="email" className="text-right">
                     이메일
                   </Label>
                   <Input
@@ -96,6 +172,8 @@ export default function Header() {
                     type="email"
                     placeholder="이메일을 입력해주세요."
                     className="col-span-3"
+                    value={signUpEmail}
+                    onChange={handleSignUpEmailChange}
                   />
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
@@ -107,6 +185,8 @@ export default function Header() {
                     type="password"
                     placeholder="비밀번호를 입력해주세요"
                     className="col-span-3"
+                    value={signUpPassword}
+                    onChange={handleSignUpPasswordChange}
                   />
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
@@ -118,11 +198,13 @@ export default function Header() {
                     type="password"
                     placeholder="비밀번호를 다시 입력해주세요"
                     className="col-span-3"
+                    value={signUpPasswordConfirm}
+                    onChange={handleSignUpPasswordConfirmChange}
                   />
                 </div>
               </div>
               <DialogFooter>
-                <Button type="submit">회원가입</Button>
+                <Button onClick={handleSignUp}>회원가입</Button>
               </DialogFooter>
             </DialogContent>
           </Dialog>
