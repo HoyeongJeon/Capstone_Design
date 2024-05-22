@@ -69,7 +69,7 @@ let AuthService = class AuthService {
     logIn(userId) {
         const payload = { id: userId };
         const accessToken = this.jwtService.sign(payload);
-        return { accessToken };
+        return { data: accessToken };
     }
     async validateUser(logInDto) {
         const user = await this.userRepository.findOne({

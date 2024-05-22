@@ -10,10 +10,10 @@ export declare class AuthService {
     private readonly jwtService;
     constructor(userRepository: Repository<UserModel>, configService: ConfigService, jwtService: JwtService);
     signUp(signUpDto: SignUpDto): Promise<{
-        accessToken: string;
+        data: string;
     }>;
     logIn(userId: number): {
-        accessToken: string;
+        data: string;
     };
     validateUser(logInDto: LogInDto): Promise<UserModel>;
 }

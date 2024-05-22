@@ -18,7 +18,6 @@ const auth_service_1 = require("./auth.service");
 const sign_up_dto_1 = require("./dtos/sign-up.dto");
 const swagger_1 = require("@nestjs/swagger");
 const passport_1 = require("@nestjs/passport");
-const login_dto_1 = require("./dtos/login.dto");
 let AuthController = class AuthController {
     constructor(authService) {
         this.authService = authService;
@@ -31,12 +30,14 @@ let AuthController = class AuthController {
             data,
         };
     }
-    login(req, logInDto) {
-        const data = this.authService.logIn(req.user.id);
+    login(req) {
+        const { data } = this.authService.logIn(req.user.id);
         return {
             statusCode: common_1.HttpStatus.OK,
             message: '로그인에 성공했습니다.',
-            data,
+            data: {
+                accessToken: data,
+            },
         };
     }
 };
@@ -53,9 +54,8 @@ __decorate([
     (0, common_1.UseGuards)((0, passport_1.AuthGuard)('local')),
     (0, common_1.Post)('login'),
     __param(0, (0, common_1.Request)()),
-    __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, login_dto_1.LogInDto]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "login", null);
 exports.AuthController = AuthController = __decorate([

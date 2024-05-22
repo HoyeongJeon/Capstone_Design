@@ -53,7 +53,7 @@ export class AuthService {
     // JWT 토큰 생성
     const payload = { id: userId };
     const accessToken = this.jwtService.sign(payload);
-    return { accessToken };
+    return { data: accessToken };
   }
 
   async validateUser(logInDto: LogInDto) {
@@ -63,7 +63,6 @@ export class AuthService {
       },
       select: { id: true, password: true },
     });
-
     const isPasswordMatched = bcrypt.compareSync(
       logInDto.password,
       user?.password ?? '',
@@ -74,7 +73,6 @@ export class AuthService {
         '이메일 또는 비밀번호가 일치하지 않습니다.',
       );
     }
-
     return user;
   }
 }
