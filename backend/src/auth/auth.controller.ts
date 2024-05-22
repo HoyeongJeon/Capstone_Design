@@ -12,7 +12,6 @@ import { AuthService } from './auth.service';
 import { SignUpDto } from './dtos/sign-up.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
-import { LogInDto } from './dtos/login.dto';
 
 @ApiTags('인증')
 @Controller('auth')
@@ -44,12 +43,14 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @UseGuards(AuthGuard('local'))
   @Post('login')
-  login(@Request() req, @Body() logInDto: LogInDto) {
-    const data = this.authService.logIn(req.user.id);
+  login(@Request() req) {
+    const { data } = this.authService.logIn(req.user.id);
     return {
       statusCode: HttpStatus.OK,
       message: '로그인에 성공했습니다.',
-      data,
+      data: {
+        accessToken: data,
+      },
     };
   }
 }

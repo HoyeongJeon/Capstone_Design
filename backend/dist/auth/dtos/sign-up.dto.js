@@ -10,18 +10,30 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SignUpDto = void 0;
-const swagger_1 = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
-const user_entity_1 = require("../../user/entities/user.entity");
-class SignUpDto extends (0, swagger_1.PickType)(user_entity_1.UserModel, [
-    'email',
-    'password',
-    'name',
-]) {
+const Dto_1 = require("../../lib/dto/Dto");
+class SignUpDto extends Dto_1.Dto {
 }
 exports.SignUpDto = SignUpDto;
 __decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", String)
+], SignUpDto.prototype, "name", void 0);
+__decorate([
+    (0, class_validator_1.IsEmail)(),
+    (0, class_validator_1.IsNotEmpty)({
+        message: '이메일을 입력해주세요.',
+    }),
+    __metadata("design:type", String)
+], SignUpDto.prototype, "email", void 0);
+__decorate([
     (0, class_validator_1.IsString)(),
+    (0, class_validator_1.IsNotEmpty)({
+        message: '비밀번호를 입력해주세요.',
+    }),
+    __metadata("design:type", String)
+], SignUpDto.prototype, "password", void 0);
+__decorate([
     (0, class_validator_1.IsNotEmpty)({
         message: '비밀번호 확인을 입력해주세요.',
     }),

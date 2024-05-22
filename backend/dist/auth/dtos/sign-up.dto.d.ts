@@ -1,6 +1,7 @@
-import { UserModel } from 'src/user/entities/user.entity';
-declare const SignUpDto_base: import("@nestjs/common").Type<Pick<UserModel, "email" | "name" | "password">>;
-export declare class SignUpDto extends SignUpDto_base {
+import { Dto } from 'src/lib/dto/Dto';
+export declare class SignUpDto extends Dto<SignUpDto> {
+    name: string;
+    email: string;
+    password: string;
     passwordConfirm: string;
 }
-export {};
