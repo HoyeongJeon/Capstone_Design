@@ -19,6 +19,6 @@ export class VideosController {
     @UploadedFile()
     video: Express.Multer.File,
   ) {
-    console.log(video);
+    return '비디오 업로드 성공';
   }
 }
