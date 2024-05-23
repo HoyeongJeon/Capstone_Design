@@ -8,6 +8,7 @@ import { typeOrmModuleOptions } from './configs/database.config';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { CommonModule } from './common/common.module';
+import { VideosModule } from './videos/videos.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { CommonModule } from './common/common.module';
     AuthModule,
     UserModule,
     CommonModule,
+    VideosModule,
   ],
   controllers: [AppController],
   providers: [AppService],
