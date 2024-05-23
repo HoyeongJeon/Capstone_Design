@@ -3,8 +3,52 @@ import Header from "@/components/Header";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { FormEvent, useRef, useState } from "react";
+import axios from "axios";
 
 export default function Main() {
+  const [video, setVideo] = useState<File | null>();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setVideo(file);
+    }
+  };
+
+  const uploadFile = async (e: FormEvent) => {
+    e.preventDefault();
+    if (!video) {
+      alert("비디오를 선택해주세요.");
+      return;
+    }
+
+    try {
+      const formData = new FormData();
+      formData.append("video", video);
+
+      const res = await axios.post(
+        "http://localhost:3000/videos/upload",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          withCredentials: true,
+        }
+      );
+
+      if (res.status === 201) {
+        alert("비디오 업로드 성공");
+        formData.delete("video");
+        setVideo(null);
+      }
+
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+    } catch (error) {}
+  };
   return (
     <>
       <div className="flex flex-col h-screen">
@@ -31,8 +75,12 @@ export default function Main() {
                     type="file"
                     accept="video/*"
                     className="mr-1"
+                    onChange={handleFileChange}
+                    ref={fileInputRef}
                   />
-                  <Button variant="outline">업로드</Button>
+                  <Button variant="outline" onClick={uploadFile}>
+                    업로드
+                  </Button>
                 </div>
               </form>
             </div>
