@@ -2,14 +2,13 @@ import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogFooter,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
-import { Link } from "react-router-dom";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -21,10 +20,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import axios, { AxiosError } from "axios";
 import { useState } from "react";
 
@@ -127,12 +122,48 @@ export default function Header() {
     <header className="bg-white rounded-lg m-4 dark:bg-gray-800">
       <ul className="flex justify-between">
         <li className="mr-3">
-          <div className="inline-block border border-gray-300 rounded py-2 px-4 hover:bg-gray-300 hover:text-white text-black mr-3">
-            소개
-          </div>
-          <div className="inline-block border border-gray-300 rounded py-2 px-4 hover:bg-gray-300 hover:text-white text-black">
-            이용안내
-          </div>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="outline" className="mr-2">
+                소개
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>소개</AlertDialogTitle>
+                <AlertDialogDescription>
+                  이 웹사이트는 딥페이크 영상을 판별하는 웹사이트입니다. <br />
+                  딥페이크 영상은 인공지능 기술을 이용해 만들어진 영상으로, 실제
+                  사실과 다른 내용을 담고 있을 수 있습니다. <br /> 넘처나는 정보
+                  속에서 진실을 찾아내기 위해 이 웹사이트를 이용해 보세요.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogAction>닫기</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="outline">이용약관</Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>이용약관</AlertDialogTitle>
+                <AlertDialogDescription>
+                  본 사이트의 판별결과는 참고용으로만 사용하시기 바랍니다.
+                  <br />본 사이트의 판별결과는 절대적인 진실을 보장하지
+                  않습니다.
+                  <br />
+                  사이트 이용으로 인해 발생하는 모든 문제에 대해 책임지지
+                  않습니다.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogAction>닫기</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </li>
         <li className="mr-3"></li>
         <li className="mr-3">
@@ -147,16 +178,35 @@ export default function Header() {
                   마이페이지
                 </Button>
 
-                <Button
-                  variant="ghost"
-                  className="inline-block py-2 px-4 text-gray-400 mr-3"
-                  onClick={() => {
-                    localStorage.removeItem("accessToken");
-                    location.reload();
-                  }}
-                >
-                  로그아웃
-                </Button>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      className="inline-block py-2 px-4 text-gray-400 mr-3"
+                    >
+                      로그아웃
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>로그아웃</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        로그아웃 하시겠습니까?
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>닫기</AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={() => {
+                          localStorage.removeItem("accessToken");
+                          location.reload();
+                        }}
+                      >
+                        로그아웃
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </>
             ) : (
               <>
