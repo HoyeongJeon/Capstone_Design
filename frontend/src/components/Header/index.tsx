@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import axios, { AxiosError } from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Header() {
   const [signUpName, setSignUpName] = useState("");
@@ -30,6 +31,8 @@ export default function Header() {
   const [signUpPasswordConfirm, setSignUpPasswordConfirm] = useState("");
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
+
+  const navigate = useNavigate();
 
   const handleSignUpNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSignUpName(e.target.value);
@@ -174,6 +177,9 @@ export default function Header() {
                 <Button
                   variant="ghost"
                   className="inline-block py-2 px-4 text-gray-400"
+                  onClick={() => {
+                    navigate("/mypage");
+                  }}
                 >
                   마이페이지
                 </Button>
