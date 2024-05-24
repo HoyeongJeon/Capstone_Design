@@ -60,9 +60,7 @@ export default function Main() {
               alt="logo"
               className="object-scale-down h-48 w-96"
             />
-            <h1 className="text-4xl font-bold text-sky-600">
-              프로젝트 이름 넣기
-            </h1>
+            <h1 className="text-4xl font-bold text-sky-600">진실의 방</h1>
 
             <div className="grid gap-y-4">
               <form>
